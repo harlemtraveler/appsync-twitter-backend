@@ -1,0 +1,20 @@
+service: appsync-twitter-backend
+frameworkVersion: '2'
+
+plugins:
+  - serverless-appsync-plugin
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+package:
+  exclude:
+    - package.json
+    - package-lock.json
+
+custom:
+  appSync:
+    - ${file(serverless.appsync-api.yml)}
+
+functions:
