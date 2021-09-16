@@ -111,19 +111,20 @@ interface ITweet {
     id: ID!
     profile: IProfile!
     createdAt: AWSDateTime!
-    text: String!
-    replies: Int!
-    likes: Int!
-    retweets: Int!
-    liked: Boolean!
-    retweeted: Boolean!
 }
 
 type Tweet implements ITweet {
-    id: ID!
-    profile: IProfile!
-    createdAt: AWSDateTime!
+id: ID!
+profile: IProfile!
+createdAt: AWSDateTime!
+text: String!
+replies: Int!
+likes: Int!
+retweets: Int!
+liked: Boolean!
+retweeted: Boolean!
 }
+
 
 type Reply implements ITweet {
     id: ID!
