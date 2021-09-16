@@ -16,6 +16,7 @@ package:
     - package-lock.json
 
 custom:
+  stage: ${opt:stage, slef:provider.stage}
   appSync:
     - ${file(serverless.appsync-api.yml)}
 
@@ -23,6 +24,33 @@ custom:
 
 resources:
   Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: screenName
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: byScreenName
+            KeySchema:
+              - AttributeName: screenName
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        Tags:
+          - Key: Environment
+            Value: ${self:custom.stage}
+          - Key: Name
+            Value: users-table
+
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
@@ -42,6 +70,17 @@ resources:
             Name: name
             Required: false
             Mutable: true
+
+    WebUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        UserPoolId: !Ref CognitoUserPool
+        ClientName: web
+        ExplicitAuthFlows:
+          - ALLOW_USER_SRP_AUTH
+          - ALLOW_USER_PASSWORD_AUTH
+          - ALLOW_REFRESH_TOKEN_AUTH
+        PreventUserExistenceErrors: ENABLED
 
   Outputs:
     CognitoUserPoolId:
