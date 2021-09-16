@@ -9,6 +9,11 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: us-east-1
+  # when using the aws-sdk (i.e. !Ref & !GetAtt), we should enable http-keepalive
+  # the aws-sdk doesn't enable this automatically
+  environment:
+    STAGE: ${self:custom.stage}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1" # enable http-keepalive
 
 package:
   exclude:
@@ -20,7 +25,15 @@ custom:
   appSync:
     - ${file(serverless.appsync-api.yml)}
 
-#functions:
+functions:
+  confirmUserSignup:
+    handler: functions/confirm-user-signup.handler
+    environment:
+      USERS_TABLE: !Ref UsersTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action: dynamodb:PutItem
+        Resource: !GetAtt UsersTable.Arn # we must use !GetAtt to access the arn for dynamodb tables
 
 resources:
   Resources:
