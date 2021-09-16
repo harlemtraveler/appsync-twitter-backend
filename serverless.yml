@@ -3,6 +3,7 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-appsync-plugin
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
@@ -30,17 +31,18 @@ resources:
         Policies:
           PasswordPolicy:
             MinimumLength: 8
-            RequiredLowercase: false
-            RequiredNumbers: false
-            RequiredUppercase: false
-            RequiredSymbols: false
-          UsernameAttributes:
-            - email
-          Schema:
-            - AttributeDataType: String
-              Name: name
-              Required: false
-              Mutable: true
-    Outputs: # CloudFormation outputs
-      CognitoUserPoolId:
-        Value: !Ref CognitoUserPool # ref the "CognitoUserPool" defined above by the same name
+            RequireLowercase: false
+            RequireNumbers: false
+            RequireUppercase: false
+            RequireSymbols: false
+        UsernameAttributes:
+          - email
+        Schema:
+          - AttributeDataType: String
+            Name: name
+            Required: false
+            Mutable: true
+
+  Outputs:
+    CognitoUserPoolId:
+      Value: !Ref CognitoUserPool
