@@ -21,7 +21,7 @@ package:
     - package-lock.json
 
 custom:
-  stage: ${opt:stage, slef:provider.stage}
+  stage: ${opt:stage, self:provider.stage}
   appSync:
     - ${file(serverless.appsync-api.yml)}
 
