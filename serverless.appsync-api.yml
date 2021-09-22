@@ -5,3 +5,20 @@ userPoolConfig:
   awsRegion: us-east-1
   defaultAction: ALLOW
   userPoolId: !Ref CognitoUserPool
+mappingTemplatesLocation: mapping-templates
+mappingTemplates:
+  - type: Query
+    field: getMyProfile
+    dataSource: usersTable
+    # The naming convention for VTL mapping templates is [type].[field].[request/response].vtl
+    # Since we are following proper naming convention, we can ignore these fields...the framework will detect them.
+#    request: Query.getMyProfile.request.vtl
+#    response: Query.getMyProfile.response.vtl
+
+dataSources:
+  - type: NONE
+    name: none
+  - type: AMAZON_DYNAMODB
+    name: usersTable
+    config:
+      tableName: !Ref UsersTable
