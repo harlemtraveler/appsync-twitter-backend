@@ -12,8 +12,8 @@ mappingTemplates:
     dataSource: usersTable
     # The naming convention for VTL mapping templates is [type].[field].[request/response].vtl
     # Since we are following proper naming convention, we can ignore these fields...the framework will detect them.
-#    request: Query.getMyProfile.request.vtl
-#    response: Query.getMyProfile.response.vtl
+    request: Query.getMyProfile.request.vtl
+    response: Query.getMyProfile.response.vtl
 
 dataSources:
   - type: NONE
