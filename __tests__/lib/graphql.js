@@ -7,11 +7,11 @@ const registerFragment = (name, fragment) => fragments[name] = fragment;
 const thrownOnErrors = ({ query, variables, errors }) => {
     if (errors) {
         const errorMessage = `
-        query: ${query.substr(0,100)}
-        
-        variables: ${JSON.stringify(variables, null, 2)}
-        
-        error: ${JSON.stringify(errors, null, 2)}
+query: ${query.substr(0,100)}
+
+variables: ${JSON.stringify(variables, null, 2)}
+
+error: ${JSON.stringify(errors, null, 2)}
         `
 
         throw new Error(errorMessage);
@@ -34,8 +34,9 @@ function* findUsedFragments (query, usedFragments = new Set()) {
     }
 }
 
-module.exports.registerFragment = registerFragment;
-module.exports.GraphQL = async (url, query, variables = {}, auth) => {
+// module.exports.registerFragment = registerFragment;
+
+module.exports = async (url, query, variables = {}, auth) => {
     const headers = {};
     if (auth) {
         headers.Authorization = auth;
@@ -52,7 +53,7 @@ module.exports.GraphQL = async (url, query, variables = {}, auth) => {
             headers,
             data: {
                 query: [query, ...usedFragments].join('/n'),
-                variables: JSON.stringify(variables);
+                variables: JSON.stringify(variables)
             }
         });
 
