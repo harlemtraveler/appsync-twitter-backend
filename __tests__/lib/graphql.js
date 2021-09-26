@@ -51,7 +51,7 @@ module.exports.GraphQL = async (url, query, variables = {}, auth) => {
             url,
             headers,
             data: {
-                query: [qeury, ...usedFragments].join('/n'),
+                query: [query, ...usedFragments].join('/n'),
                 variables: JSON.stringify(variables);
             }
         });
