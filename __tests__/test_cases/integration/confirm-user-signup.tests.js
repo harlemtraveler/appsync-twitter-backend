@@ -3,7 +3,7 @@ const when = require('../../steps/when');
 const then = require('../../steps/then');
 const chance = require('chance').Chance();
 
-describe('When confirmUserSginup runs', () => {
+describe('When confirmUserSignup runs', () => {
     it("The user's profile should be saved in DynamoDB", async () => {
         const { name, email } = given.a_random_user();
         const username = chance.guid();
@@ -18,7 +18,7 @@ describe('When confirmUserSginup runs', () => {
             followersCount: 0,
             followingCount: 0,
             tweetsCount: 0,
-            likesCount: 0
+            likesCounts: 0
         });
 
         const [ firstName, lastName ] = name.split(' ');
