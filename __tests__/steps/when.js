@@ -94,7 +94,7 @@ const a_user_calls_getMyProfile = async (user) => {
       }
     }`
 
-    const data = GraphQL(process.env.API_URL, getMyProfile, {}, user.accessToken);
+    const data = await GraphQL(process.env.API_URL, getMyProfile, {}, user.accessToken);
     const profile = data.getMyProfile;
 
     console.log(`[${user.username}] - fetched profile`);
