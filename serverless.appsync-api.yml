@@ -10,16 +10,22 @@ mappingTemplates:
   - type: Query
     field: getMyProfile
     dataSource: usersTable
-    # The naming convention for VTL mapping templates is [type].[field].[request/response].vtl
-    # Since we are following proper naming convention, we can ignore these fields...the framework will detect them.
     request: Query.getMyProfile.request.vtl
     response: Query.getMyProfile.response.vtl
+  - type: Query
+    field: getImageUploadUrl
+    dataSource: getImageUploadUrlFunction
+    # AppSync has direct resolver integration for Lambda, so we don't need to create VTL templates.
+    # To configure this direct integration, set the value(s) to "false".
+    # NOTE: you can view the default template by running "npm run sls -- package".
+    request: false
+    repsonse: false
 
   - type: Mutation
     field: editMyProfile
     dataSource: usersTable
-    request:
-    response:
+    request: Mutation.editMyProfile.request.vtl
+    response: Mutation.editMyProfile.response.vtl
 
 dataSources:
   - type: NONE
@@ -28,3 +34,7 @@ dataSources:
     name: usersTable
     config:
       tableName: !Ref UsersTable
+  - type: AWS_LAMBDA
+    name: getImageUploadUrlFunction
+    config:
+      functionName: getImageUploadUrl
