@@ -13,13 +13,10 @@ mappingTemplates:
     request: Query.getMyProfile.request.vtl
     response: Query.getMyProfile.response.vtl
   - type: Query
-    field: getImageUploadUrl
-    dataSource: getImageUploadUrlFunction
-    # AppSync has direct resolver integration for Lambda, so we don't need to create VTL templates.
-    # To configure this direct integration, set the value(s) to "false".
-    # NOTE: you can view the default template by running "npm run sls -- package".
     request: false
-    repsonse: false
+    response: false
+    dataSource: getImageUploadUrlFunction
+    field: getImageUploadUrl
 
   - type: Mutation
     field: editMyProfile
