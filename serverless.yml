@@ -126,10 +126,10 @@ resources:
         PreventUserExistenceErrors: ENABLED
 
     AssetsBucket:
-      Type: AWS::S3:Bucket
+      Type: AWS::S3::Bucket
       Properties:
-        AcceleratedConfiguration:
-          AccelerationStatus: Enabled
+        AccelerateConfiguration:
+          AccelerationStatus: Suspended
         CorsConfiguration:
           CorsRules:
             - AllowedMethods:
